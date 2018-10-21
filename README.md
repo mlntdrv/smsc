@@ -2,7 +2,7 @@
 An extremely simplified and somewhat totally incomplete demo of an SMS centre. Features:
 
 * ESME sessions support thru SMPP (supported commands are bind\_trx, unbind)
-* SM submission over SMPP (supported command is submit\_sm), message ID generation and message storage in memory
+* SM submission over SMPP (supported command is submit\_sm), message ID generation and message storage in MongoDB
 
 ## Usage
 1. Copy everything to a local directory e.g. smsc
