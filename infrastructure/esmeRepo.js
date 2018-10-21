@@ -1,18 +1,19 @@
-const esmeRepo = {esme: [{systemId : 'esme1', pwd : 'pwd1'},
-                         {systemId : 'esme2', pwd : 'pwd2'}]};
+const ESME_COLLECTION = 'esme';
 
-esmeRepo.find = function(esme){    
-    return new Promise((resolve, reject) => {
-        // Do async job mock
-        setTimeout(() => {
-            const res = this.esme.findIndex(e => {
-                return e.systemId == esme.systemId && e.pwd == esme.pwd});
-            
-            if(res === -1) return reject(new Error('ESME not found.'));
-            
-            resolve(true);
-        }, 1000);
-    });
+const {Mongo} = require('mongodb-pool');
+const connCfg = require('./mongoConnCfg.js');
+
+const esmeRepo = {};
+
+esmeRepo.find = async function(esme){
+    return (async () => {
+        await Mongo.connect(...connCfg);
+        const db = Mongo.getDb();
+        
+        const res = await db.collection(ESME_COLLECTION).find(esme).toArray();
+        if(res.length == 0) throw new Error('ESME not found.');
+        return true;
+    })();
 }
 
 module.exports = esmeRepo;
