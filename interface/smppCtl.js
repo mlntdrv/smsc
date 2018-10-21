@@ -35,7 +35,7 @@ function onBindTrx(pdu){
         smppSession.send(pdu.response({command_status : smpp.ESME_ROK}));
         smppSession.resume();
     }).catch(err => {
-        console.log(err);
+        console.log(err.message);
         smppSession.send(pdu.response({command_status : smpp.ESME_RINVPASWD}));
         smppSession.close();
     });
@@ -61,7 +61,7 @@ function onSubmitSm(pdu){
             
         })
         .catch(err => {
-            console.log(err);
+            console.log(err.message);
             smppSession.send(pdu.response({command_status : smpp.ESME_RSYSERR}));
             smppSession.resume();
         });
